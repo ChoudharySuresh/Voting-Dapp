@@ -7,9 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="/assests/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Nav-Bar</title>
+    <title>Index</title>
 </head>
 <body>
     <header>
@@ -19,8 +19,8 @@
             </div>
 
             <ul class="nav-links">
-                <li><a href="/index.html">Home</a></li>
-                <li><a href="/Instruction.html">Instructions</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/instruction">Instructions</a></li>
                 <!-- <li><a href="/Cate-Vote.html">Cast Vote</a></li> -->
             </ul>
         </nav>
@@ -29,11 +29,11 @@
     <main>
         <div class="container">
             <div class="img">
-                <img src="Img/voting.svg">
+                <img src="assests/voting.svg">
             </div>
             <div class="login-content">
-                <form action="index.html">
-                    <img src="Img/avatar.svg">
+                <form action="/verify" method="post">
+                    <img src="assests/avatar.svg">
                     <h2 class="title">Welcome</h2>
                        <div class="input-div one">
                           <div class="i">
@@ -41,7 +41,7 @@
                           </div>
                           <div class="div">
                                   <h5>Voter Name</h5>
-                                  <input type="text" class="input">
+                                  <input type="text" class="input" name ="name">
                           </div>
                        </div>
                        <div class="input-div two">
@@ -50,10 +50,14 @@
                           </div>
                           <div class="div">
                                <h5>Voter ID</h5>
-                               <input type="text" class="input">
+                               <input type="text" class="input" name = "id">
                        </div>
                     </div>
                     <input type="submit" class="btn" value="Verify">
+                    <% if( user==true){ %>
+                        <p> Voter ID doesn't Exist </p>
+                        
+                <% } %>
                 </form>
             </div>
         </div>
@@ -61,6 +65,6 @@
     <footer>
 
     </footer>
-    <script src="JS/index.js"></script>
+    <script src="assests/index.js"></script>
 </body>
 </html>

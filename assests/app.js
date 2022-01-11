@@ -23,7 +23,7 @@ App = {
   },
 
   initContract: function() {
-    $.getJSON("Election.json", function(election) {
+    $.getJSON("../build/contracts/Election.json", function(election) {
       // Instantiate a new truffle contract from the artifact
       App.contracts.Election = TruffleContract(election);
       // Connect provider to interact with contract
@@ -38,9 +38,6 @@ App = {
   // Listen for events emitted from the contract
   listenForEvents: function() {
     App.contracts.Election.deployed().then(function(instance) {
-      // Restart Chrome if you are unable to receive this event
-      // This is a known issue with Metamask
-      // https://github.com/MetaMask/metamask-extension/issues/2393
       instance.votedEvent({}, {
         fromBlock: 0,
         toBlock: 'latest'
@@ -68,6 +65,9 @@ App = {
       }
     });
 
+    var name_=" ";
+    let maxx = 0;
+
     // Load contract data
     App.contracts.Election.deployed().then(function(instance) {
       electionInstance = instance;
@@ -79,20 +79,42 @@ App = {
       var candidatesSelect = $('#candidatesSelect');
       candidatesSelect.empty();
 
+      var winningcandidate = $('#winningcandidate');
+      winningcandidate.empty();
+        var count = 4;
       for (var i = 1; i <= candidatesCount; i++) {
         electionInstance.candidates(i).then(function(candidate) {
           var id = candidate[0];
           var name = candidate[1];
-          var voteCount = candidate[2];
+          var voteCount = candidate[2].toNumber();
+
+          if(voteCount > maxx){
+            
+            console.log(voteCount);
+            maxx = voteCount;
+            name_ = name;
+          }
 
           // Render candidate Result
           var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + voteCount + "</td></tr>"
           candidatesResults.append(candidateTemplate);
-
+          
           // Render candidate ballot option
           var candidateOption = "<option value='" + id + "' >" + name + "</ option>"
           candidatesSelect.append(candidateOption);
+
+          // console.log(i);
+          // console.log(candidatesCount);
+          count--;
+          if(count==0){
+            var candidateTemp =  name_ + "   " + maxx + "</td></tr>"
+            winningcandidate.append(candidateTemp);
+          }
+          
         });
+
+
+        
       }
       return electionInstance.voters(App.account);
     }).then(function(hasVoted) {
